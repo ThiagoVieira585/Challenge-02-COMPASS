@@ -1,26 +1,42 @@
-import { Request, Response } from 'express';
-import Tutor from '../model/tutor.model';
-
+import { Request, Response } from "express";
+import Tutor from "../model/tutor.model";
 
 export async function createTutor(req: Request, res: Response) {
-  const {name, phone, email, date_of_birth, zip_code, pets} = req.body
+  const { name, phone, email, date_of_birth, zip_code, pets } = req.body;
 
   const tutor = {
-      name,
-      phone,
-      email,
-      date_of_birth,
-      zip_code,
-      pets
+    name,
+    phone,
+    email,
+    date_of_birth,
+    zip_code,
+    pets,
+  };
+
+  try {
+    await Tutor.create(tutor);
+
+    res.status(201).json({ message: "Sucesso" });
+  } catch (error) {
+    res.status(500).json({ error: error });
   }
+}
 
-  try{
+export async function readTutor(req: Request, res: Response) {
+  try {
+    const tutor = await Tutor.find();
 
-      await Tutor.create(tutor)
+    res.status(200).json(tutor);
+  } catch (error) {}
+}
 
-      res.status(201).json({message: 'Sucesso'})
+export async function getById(req: Request, res: Response) {
+    const id = req.params.id;
+    try {
+        const tutor = await Tutor.findOne({ _id: id})
 
-  } catch(error){
-      res.status(500).json({error: error})
+        res.status(200).json(tutor);
+  } catch (error) {
+    res.status(500).json({ error: error });
   }
 }
