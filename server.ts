@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 
 import tutorRouter from "./src/routes/tutor.route";
 import mongoose from "mongoose";
-
+import petRouter from "./src/routes/pet.route"
 
 
 
@@ -17,6 +17,7 @@ app.use(
 );
 
 app.use(tutorRouter);
+app.use(petRouter);
 
 mongoose
   .connect(

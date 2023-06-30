@@ -13,7 +13,7 @@ const PetSchema = new Schema<_Pet>({
   species: { type: String, required: true },
   category: { type: String, required: true },
   weight: { type: Number, required: true },
-  date_of_birth: { type: Date, required: true }
+  date_of_birth: { type: Date, required: true },
 });
 
 const Pet = mongoose.model<_Pet>('Pet', PetSchema);

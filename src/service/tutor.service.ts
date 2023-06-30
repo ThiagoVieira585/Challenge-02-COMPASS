@@ -72,5 +72,7 @@ export async function updateById(req: Request, res: Response) {
     const tutor = await Tutor.updateOne({ _id: id }, tutors);
 
     res.status(200).json(tutor);
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
 }

@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import Pet, { _Pet } from './pet.model';
-
+import { _Pet } from './pet.model';
+import Pet from './pet.model';
 
 export interface _Tutor extends Document {
   name: string;
@@ -8,17 +8,17 @@ export interface _Tutor extends Document {
   email: string;
   date_of_birth: string;
   zip_code: string;
-  pets: _Pet[]; // Utiliza a interface do Pet
+  pets: _Pet[];
 }
 
-export const TutorSchema = new Schema<_Tutor>({
-    name: { type: String, required: true },
-    phone: { type: String, required: true },
-    email: { type: String, required: true },
-    date_of_birth: { type: String, required: true },
-    zip_code: { type: String, required: true },
-    pets: { type: [Schema.Types.ObjectId], required: true },
-  });
+const TutorSchema = new Schema<_Tutor>({
+  name: { type: String, required: true },
+  phone: { type: String, required: true },
+  email: { type: String, required: true },
+  date_of_birth: { type: String, required: true },
+  zip_code: { type: String, required: true },
+  pets: [{ type: Schema.Types.ObjectId, ref: 'Pet' }], 
+});
 
 const Tutor = mongoose.model<_Tutor>('Tutor', TutorSchema);
 
