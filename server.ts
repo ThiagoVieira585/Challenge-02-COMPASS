@@ -3,8 +3,10 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import tutorRouter from "./src/routes/tutor.route";
 import mongoose from "mongoose";
-import petRouter from "./src/routes/pet.route"
+import petRouter from "./src/routes/pet.route";
 import jwt from 'jsonwebtoken';
+import authRouter from "./src/routes/auth.route";
+
 
 dotenv.config();
 const port = 27017;
@@ -19,6 +21,7 @@ app.use(
 
 app.use(tutorRouter);
 app.use(petRouter);
+app.use(authRouter);
 
 mongoose
   .connect(
