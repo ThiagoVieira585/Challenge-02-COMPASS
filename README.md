@@ -6,7 +6,7 @@ Essa API também oferece recursos de autenticação com token para garantir a se
 
 ## Configuração
 
-Certifique-se de ter o Node.js e o MongoDB instalados em seu ambiente de desenvolvimento.
+Certifique-se de ter o Node.js e a extensão MongoDB for VSCode instalados.
 
 ## Instalação
 
