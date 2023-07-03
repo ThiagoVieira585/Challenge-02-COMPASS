@@ -12,7 +12,7 @@ import swaggerDocs from "./swagger.json";
 const port = 27017;
 const app = express();
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup())
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(
   express.urlencoded({
@@ -26,7 +26,7 @@ app.use(authRouter);
 
 mongoose
   .connect(
-    "mongodb+srv://<seu_usuario>:<sua_senha>@cluster0.zbxllgz.mongodb.net/"
+    "mongodb+srv://thiagogatovieiradasilva585:admin123@cluster0.zbxllgz.mongodb.net/"
   )
   .then(()=>{
    

@@ -35,7 +35,7 @@ export async function createTutor(req: Request, res: Response) {
     if (!req.body[field]) {
       return res
         .status(400)
-        .json({ error: `O campo '${field}' é obrigatório` });
+        .json({ message: `O campo '${field}' é obrigatório` });
     }
   }
 
@@ -45,7 +45,7 @@ export async function createTutor(req: Request, res: Response) {
   if (tutorExists) {
     return res
       .status(400)
-      .json({ error: "Já existe um tutor criado com esse email." });
+      .json({ message: "Já existe um tutor criado com esse email." });
   }
 
   try {
@@ -53,17 +53,17 @@ export async function createTutor(req: Request, res: Response) {
 
     res.status(201).json({ message: "Tutor criado com Sucesso" });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({  message: "Erro interno do servidor."  });
   }
 }
 
 export async function readTutor(req: Request, res: Response) {
   try {
-    const tutor = await Tutor.find().select('-password');;
+    const tutor = await Tutor.find().select("-password");
 
     res.status(200).json(tutor);
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({  message: "Erro interno do servidor."  });
   }
 }
 
@@ -74,7 +74,7 @@ export async function getById(req: Request, res: Response) {
 
     res.status(200).json({ tutor, message: "Tutor atualizado" });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({  message: "Erro interno do servidor."  });
   }
 }
 
@@ -84,14 +84,14 @@ export async function deleteTutor(req: Request, res: Response) {
   try {
     const tutor = await Tutor.findOne({ _id: id });
     if (!tutor) {
-      return res.status(404).json({ error: "Id do tutor não encontrado" });
+      return res.status(404).json({ message: "Id do tutor não encontrado" });
     }
 
     if (tutor.pets.length > 0) {
       return res
         .status(400)
         .json({
-          error:
+          message:
             "Não é possível excluir o tutor porque ele possui pets registrados.",
         });
     }
@@ -100,10 +100,15 @@ export async function deleteTutor(req: Request, res: Response) {
 
     res.status(204).json({ message: "Tutor apagado" });
   } catch (error) {
-    if (error === "CastError") {
-      return res.status(400).json({ error: "ID inválido" });
+    if (error) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Requisição inválida. Verifique o id enviado e tente novamente.",
+        });
     }
-    res.status(500).json({ message: "Error" });
+    res.status(500).json({ message: "Erro interno do servidor." });
   }
 }
 
@@ -117,25 +122,24 @@ export async function updateTutor(req: Request, res: Response) {
     phone,
     email,
     date_of_birth,
-    zip_code
+    zip_code,
   };
-  if (!name || !phone || !email || !date_of_birth || !zip_code ) {
-    res.status(400).json({ error: "Todos os campos são obrigatórios" });
+  if (!name || !phone || !email || !date_of_birth || !zip_code) {
+    res.status(400).json({ message: "Todos os campos são obrigatórios" });
     return;
   }
-  
+
   const tutor = await Tutor.findById(id);
-  
 
   if (!tutor) {
-    return res.status(404).json({error: "Tutor não encontrado.", tutor})
+    return res.status(404).json({ message: "Tutor não encontrado.", tutor });
   }
 
   try {
     const tutor = await Tutor.updateOne({ _id: id }, tutors);
 
-    res.status(200)
+    res.status(200);
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ message: "Erro interno do servidor." });
   }
 }

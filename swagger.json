@@ -3,7 +3,7 @@
     "info": {
       "title": "API de Pets",
       "version": "1.0.0",
-      "description": "API para gerenciamento de pets"
+      "description": "API para gerenciamento de tutores e pets"
     },
     "paths": {
       "/auth": {
@@ -137,6 +137,11 @@
               }
             }
           ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "requestBody": {
             "description": "Novos dados do tutor",
             "required": true,
@@ -173,6 +178,11 @@
               "schema": {
                 "type": "string"
               }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
             }
           ],
           "responses": {
@@ -366,19 +376,36 @@
             "name": {
               "type": "string"
             },
+            "phone": {
+              "type": "string"
+            },
             "email": {
               "type": "string",
               "format": "email"
             },
             "password": {
+              "type": "string"
+            },
+            "date_of_birth": {
               "type": "string",
-              "format": "password"
+              "format": "date"
+            },
+            "zip_code": {
+              "type": "string"
+            },
+            "pets": {
+              "type": "array",
+              "default": []
             }
           },
           "required": [
             "name",
+            "phone",
             "email",
-            "password"
+            "password",
+            "date_of_birth",
+            "zip_code",
+            "pets"
           ]
         },
         "Pet": {
