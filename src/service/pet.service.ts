@@ -35,7 +35,7 @@ export async function createPet(req: Request, res: Response) {
     tutor.pets.push(pet);
     await tutor.save();
 
-    res.status(201).json({ pet: pet.toObject(), message: "Pet criado" });
+    res.status(201).json({ message: "Pet criado!" });
 
   } catch (error) {
     res.status(500).json({ error: error });

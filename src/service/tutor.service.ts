@@ -82,9 +82,9 @@ export async function deleteTutor(req: Request, res: Response) {
   const id = req.params.id;
 
   try {
-    const tutor = await Tutor.findById(id);
+    const tutor = await Tutor.findOne({ _id: id });
     if (!tutor) {
-      return res.status(404).json({ error: "Tutor não encontrado" });
+      return res.status(404).json({ error: "Id do tutor não encontrado" });
     }
 
     if (tutor.pets.length > 0) {
@@ -100,7 +100,10 @@ export async function deleteTutor(req: Request, res: Response) {
 
     res.status(204).json({ message: "Tutor apagado" });
   } catch (error) {
-    res.status(500).json({ error: error });
+    if (error === "CastError") {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+    res.status(500).json({ message: "Error" });
   }
 }
 
@@ -122,6 +125,7 @@ export async function updateTutor(req: Request, res: Response) {
   }
   
   const tutor = await Tutor.findById(id);
+  
 
   if (!tutor) {
     return res.status(404).json({error: "Tutor não encontrado.", tutor})
@@ -130,7 +134,7 @@ export async function updateTutor(req: Request, res: Response) {
   try {
     const tutor = await Tutor.updateOne({ _id: id }, tutors);
 
-    res.status(200).json(tutor);
+    res.status(200)
   } catch (error) {
     res.status(500).json({ error: error });
   }

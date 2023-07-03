@@ -6,15 +6,15 @@ import { checkToken } from "../middleware/token";
 const router = express.Router();
 router.use(express.json())
 
-router.get("/tutors", readTutor,  (req: Request, res: Response) => {
+router.get("/tutors",checkToken, readTutor,  (req: Request, res: Response) => {
 });
 router.get("/tutors/:id", getById, (req: Request, res: Response) =>{
 });
 router.post("/tutors", createTutor, (req: Request, res: Response) =>{
 });
-router.delete("/tutors/:id", deleteTutor, checkToken, (req: Request, res: Response) =>{
+router.delete("/tutors/:id", checkToken, deleteTutor,  (req: Request, res: Response) =>{
 })
-router.put("/tutors/:id", updateTutor, checkToken, (req: Request, res: Response) =>{
+router.put("/tutors/:id", checkToken,updateTutor,  (req: Request, res: Response) =>{
 })
 
 

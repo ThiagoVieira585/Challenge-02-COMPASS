@@ -30,7 +30,7 @@ export async function authTutor(req: Request, res: Response) {
       return res.status(401).json({ error: "Senha inválida." });
     }
     
-    const secret = "da98dj8219ijkklmkasmdlaJD892km9d3293i90";
+    const secret = "idjawodjawkdjlakdj231231";
     
     const token = jwt.sign(
       {

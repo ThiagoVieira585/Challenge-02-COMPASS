@@ -6,10 +6,10 @@ import { checkToken } from "../middleware/token";
 const router = express.Router();
 router.use(express.json())
 
-router.post("/pet/:tutorId", createPet, checkToken, (req:Request, res:Response) =>{
+router.post("/pet/:tutorId", checkToken, createPet,  (req:Request, res:Response) =>{
 });
-router.put("/pet/:petId/tutor/:tutorId", updatePet, checkToken, (req:Request, res:Response) =>{
+router.put("/pet/:petId/tutor/:tutorId", checkToken,updatePet,  (req:Request, res:Response) =>{
 });
-router.delete("/pet/:petId/tutor/:tutorId", deletePet, checkToken, (req:Request, res:Response) =>{
+router.delete("/pet/:petId/tutor/:tutorId", checkToken, deletePet, (req:Request, res:Response) =>{
 });
 export default router;
