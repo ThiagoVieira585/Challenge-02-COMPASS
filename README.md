@@ -8,7 +8,7 @@ Essa API também oferece recursos de autenticação com token para garantir a se
 
 Certifique-se de ter o Node.js e a extensão MongoDB for VSCode instalados.
 
-No server.ts certifique-se de mudar os campos "seu_usuario" e "password" no mongosse connect. **Linha 29**
+No server.ts certifique-se de mudar os campos "seu_usuario" e "sua_senha" no mongosse connect. **Linha 29**
 
 ## Instalação
 
