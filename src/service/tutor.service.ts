@@ -59,7 +59,7 @@ export async function createTutor(req: Request, res: Response) {
 
 export async function readTutor(req: Request, res: Response) {
   try {
-    const tutor = await Tutor.find().select("-password");
+    const tutor = await Tutor.find().select("-_id -password");
 
     res.status(200).json(tutor);
   } catch (error) {
@@ -115,7 +115,7 @@ export async function deleteTutor(req: Request, res: Response) {
 export async function updateTutor(req: Request, res: Response) {
   const id = req.params.id;
 
-  const { name, phone, email, date_of_birth, zip_code } = req.body;
+  const { name, phone, email, date_of_birth, zip_code, password, pet } = req.body;
 
   const tutors = {
     name,
@@ -124,22 +124,37 @@ export async function updateTutor(req: Request, res: Response) {
     date_of_birth,
     zip_code,
   };
+
   if (!name || !phone || !email || !date_of_birth || !zip_code) {
     res.status(400).json({ message: "Todos os campos são obrigatórios" });
     return;
   }
 
-  const tutor = await Tutor.findById(id);
+  const existingTutor = await Tutor.findById(id);
 
-  if (!tutor) {
-    return res.status(404).json({ message: "Tutor não encontrado.", tutor });
+  if (!existingTutor) {
+    return res.status(404).json({ message: "Tutor não encontrado.", tutor: existingTutor });
   }
 
   try {
-    const tutor = await Tutor.updateOne({ _id: id }, tutors);
+    if (password) {
+      res.status(400).json({ message: "Atualização de senha não permitida" });
+      return;
+    }
 
-    res.status(200);
+    if (pet) {
+      res.status(400).json({ message: "Atualização do pet não permitida" });
+      return;
+    }
+
+    const updatedTutor = await Tutor.updateOne({ _id: id }, tutors);
+
+    res.status(200).json({ message: "Tutor atualizado com sucesso." });
   } catch (error) {
     res.status(500).json({ message: "Erro interno do servidor." });
   }
 }
+
+
+
+
