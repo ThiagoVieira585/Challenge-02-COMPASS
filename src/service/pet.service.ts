@@ -22,18 +22,20 @@ export async function createPet(req: Request, res: Response) {
       weight,
       date_of_birth,
     };
-
-    const pet = new Pet(petData);
-    await pet.save();
-
     const tutor: _Tutor | null = await Tutor.findById(tutorId);
-
+    const pet = new Pet(petData);
     if (!tutor) {
+      await pet.deleteOne(); // Remove o pet criado anteriormente, já que o tutor não foi encontrado
       return res.status(404).json({ error: "Tutor não encontrado." });
     }
+    
+    await pet.save();
 
-    tutor.pets.push(pet);
-    await tutor.save();
+    
+
+    
+    tutor?.pets.push(pet);
+    await tutor?.save();
 
     res.status(201).json({ message: "Pet criado!" });
 
@@ -64,9 +66,21 @@ export async function updatePet(req: Request, res: Response) {
   }
 
   try {
-    const pet = await Pet.updateOne({ _id: idPet }, pets);
+    const tutor: _Tutor | null = await Tutor.findById(idTutor);
 
-    res.status(200).json({ pet, message: "Pet atualizado" });
+    if (!tutor) {
+      return res.status(404).json({ error: "Tutor não encontrado." });
+    }
+
+    const pet = await Pet.findById(idPet);
+
+    if (!pet) {
+      return res.status(404).json({ error: "Pet não encontrado." });
+    }
+
+    const updatedPet = await Pet.updateOne({ _id: idPet }, pets);
+
+    res.status(200).json({ pet: updatedPet, message: "Pet atualizado" });
   } catch (error) {
     res.status(500).json({ error: error });
   }
