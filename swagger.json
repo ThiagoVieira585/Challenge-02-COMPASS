@@ -354,7 +354,8 @@
             },
             "password": {
               "type": "string",
-              "format": "password"
+              "format": "password",
+              "default": "****"
             }
           },
           "required": [
@@ -374,24 +375,28 @@
           "type": "object",
           "properties": {
             "name": {
-              "type": "string"
+              "type": "string",
+              "default": "Thiago"
             },
             "phone": {
-              "type": "string"
+              "type": "string",
+              "default": "88998532078"
             },
             "email": {
               "type": "string",
               "format": "email"
             },
             "password": {
-              "type": "string"
+              "type": "string",
+              "default": "****"
             },
             "date_of_birth": {
               "type": "string",
               "format": "date"
             },
             "zip_code": {
-              "type": "string"
+              "type": "string",
+              "default": "63540-000"
             },
             "pets": {
               "type": "array",
@@ -412,17 +417,21 @@
           "type": "object",
           "properties": {
             "name": {
-              "type": "string"
+              "type": "string",
+              "default": "Lua"
             },
             "species": {
-              "type": "string"
+              "type": "string",
+              "default": "Psita"
             },
             "category": {
-              "type": "string"
+              "type": "string",
+              "default": "p"
             },
             "weight": {
               "type": "number",
-              "format": "float"
+              "format": "float",
+              "default": 100
             },
             "date_of_birth": {
               "type": "string",

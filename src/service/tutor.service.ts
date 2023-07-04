@@ -59,7 +59,7 @@ export async function createTutor(req: Request, res: Response) {
 
 export async function readTutor(req: Request, res: Response) {
   try {
-    const tutor = await Tutor.find().select("-_id -password");
+    const tutor = await Tutor.find().select("-password");
 
     res.status(200).json(tutor);
   } catch (error) {
